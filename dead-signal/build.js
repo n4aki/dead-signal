@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+fs.mkdirSync('dist', { recursive: true });
+for (const f of ['index.html', 'style.css', 'game.js', 'engine.js', 'stage-data.js', 'stages.js', 'primitives.js', 'enemy-data.js', 'enemy-models.js', 'combat-math.js', 'bestiary.js', 'boss-ai.js', 'combat-input.js', 'combat-fx.js']) fs.copyFileSync(f, 'dist/' + f);
+fs.copyFileSync('spawn-data.js','dist/spawn-data.js');
+fs.copyFileSync('enemy-voices.js','dist/enemy-voices.js');
+fs.copyFileSync('route-data.js','dist/route-data.js');
+fs.copyFileSync('route-choice.js','dist/route-choice.js');
+fs.copyFileSync('rescue-event.js','dist/rescue-event.js');
+fs.copyFileSync('survivor-model.js','dist/survivor-model.js');
+fs.copyFileSync('environment-art.js','dist/environment-art.js');
+fs.copyFileSync('enemy-motion.js','dist/enemy-motion.js');
+fs.copyFileSync('free-roam.js','dist/free-roam.js');
+fs.cpSync('vendor', 'dist/vendor', { recursive: true });
+console.log('Built dist/ — all assets included, no network required.');

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ja">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><meta name="theme-color" content="#101817"><title>DEAD SIGNAL — ゾンビ・アーケード</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<main id="app">
+  <canvas id="scene" aria-label="ゾンビシューティング画面" tabindex="0"></canvas>
+  <div class="vignette"></div><div class="grain"></div><div id="damage"></div><div id="flash"></div><div id="travel-fade"></div>
+  <header><a class="brand" href="./" aria-label="タイトルへ"><span class="brand-mark">╋</span> DEAD SIGNAL <small>ARCADE SYSTEM / 09</small></a><div class="header-right"><span class="live-dot"></span><span id="status">CONNECTION LOST</span><button id="sound" aria-label="音声切り替え">SOUND ON</button><button id="fullscreen" aria-label="全画面表示">⛶</button></div></header>
+  <section id="menu" class="overlay">
+    <div class="menu-copy"><div class="eyebrow"><span></span> QUARANTINE ZONE · 03:47 AM</div><h1>DEAD<br><em>SIGNAL</em><span class="title-dot">.</span></h1><p class="tagline">通信は途絶えた。<br>生き延びる手段は、その引き金だけ。</p><label class="stage-choice">モード <select id="play-mode" aria-label="ゲームモード"><option value="arcade">アーケード / 自動移動</option><option value="free">自由移動 / 検問所</option></select></label><label class="stage-choice">出撃地点 <select id="start-area" aria-label="出撃地点"><option value="1">01 封鎖検問所 / 最初から</option><option value="2">02 裏路地・死角 / 練習</option><option value="3">03 病院・救急ロビー / 練習</option><option value="4">04 倉庫・搬入デッキ / 練習</option><option value="5">05 屋上・最終退避地点 / 練習</option><option value="boss">BOSS 変異巨人 / 一騎打ち練習</option></select></label><div class="start-row"><button id="start" class="primary">作戦開始 <span>↗</span></button><button id="open-bestiary" class="secondary">敵図鑑 ↗</button></div><div class="menu-controls" id="menu-controls"><span><kbd>HOLD</kbd> 押しっぱなしで連射</span><span><kbd>R</kbd> リロード</span><span><kbd>1</kbd><kbd>2</kbd> 武器切替</span></div></div>
+    <aside class="mission-card"><span class="tiny-label">AREA INTELLIGENCE</span><h3 id="intel-title"></h3><p id="intel-tip"></p><div id="intel-enemies"></div><div class="signal-line"><span id="intel-footer"></span></div></aside>
+    <footer class="menu-footer"><span>SECTOR 07 <i>/</i> THE LAST CHECKPOINT</span><span>BEST SCORE <b id="menu-best">000000</b></span></footer>
+  </section>
+  <section id="bestiary" hidden>
+    <button id="close-bestiary" class="secondary">タイトルに戻る ×</button>
+    <div class="bestiary-copy"><span class="eyebrow">HOSTILE DATABASE / 08 SPECIES</span><h2 id="enemy-code"></h2><h3 id="enemy-name"></h3><p id="enemy-description"></p><div id="enemy-stats"></div><small>MODEL PREVIEW / 拡大表示</small></div>
+    <div id="enemy-select" aria-label="敵キャラクターを選択"></div>
+  </section>
+  <section id="hud" hidden><div id="touch-controls"><div id="move-pad" role="group" aria-label="移動スティック"><span id="move-stick"></span><small>移動</small></div><button id="touch-fire" aria-label="長押しで射撃">射撃</button><span class="touch-tip">スワイプで照準・視点 / 横画面推奨</span></div><div id="free-help" hidden><span>WASD 移動 · Shift ダッシュ · マウス / 矢印で視点 · Esc 一時停止</span><small id="free-pointer-hint"></small><strong id="free-threat"></strong><output id="free-position" aria-label="現在位置"></output></div>
+    <div class="hud-top"><div class="wave-info"><span class="tiny-label">CONTAINMENT PROTOCOL</span><strong>AREA <b id="wave">01</b><small id="area-total">/ 05</small></strong><span id="remaining">感染者を排除せよ</span><span id="area-tendency"></span></div><div class="score-info"><span class="tiny-label">SCORE</span><strong id="score">000000</strong><span id="combo"></span></div></div>
+    <div id="route" hidden><span id="route-name"></span><div><i id="route-progress"></i></div><small id="route-distance"></small></div>
+    <div id="boss-bar" hidden><span>MUTANT WARDEN / 変異巨人</span><div><i id="boss-health"></i></div></div>
+    <div id="announcement"><span id="announce-small"></span><strong id="announce-main"></strong></div>
+    <div id="crosshair"><i></i><i></i><i></i><i></i><b></b></div><div id="hitmarker">×</div><div id="popups"></div>
+    <div id="kill-callout"></div><div id="reload-notice"></div><div id="threat-warning"></div>
+    <div id="rescue-status" hidden><div><strong id="rescue-title"></strong><span id="survivor-hearts" role="img"></span></div><small id="rescue-detail"></small></div>
+    <div id="rescue-pin" hidden>＋ 生存者を守れ</div>
+    <div class="hud-bottom"><div class="health-block"><span class="tiny-label">LIFE / 体力</span><div id="health-hearts" role="img" aria-label="体力100 / 100、ハート10個"></div><small id="contact">第7分隊 / 最終防衛線</small></div><div class="actions"><button id="grenade">G <span>手榴弾</span> <b id="grenades">3</b></button><button id="pause">Ⅱ <span>一時停止</span></button></div><div class="ammo-block"><button id="weapon">01 / STORM MACHINE GUN</button><div><strong id="ammo">60</strong><span>/ <b id="capacity">60</b></span><button id="reload">R <span>RELOAD</span></button></div><div id="ammo-dots"></div></div></div>
+  </section>
+  <section id="route-choice" role="dialog" aria-modal="true" aria-labelledby="route-choice-title" hidden><div class="route-choice-inner"><span class="eyebrow">AREA CLEAR / 進路選択</span><h2 id="route-choice-title">次は、どちらへ。</h2><p class="route-intro">検問所を突破。病院へ向かうルートを選ぼう。</p><div id="route-options"></div><p class="route-choice-footer"><span>どちらも次のエリアで病院へ合流</span><span>到着時：♥ 2個回復 ＋ 弾倉補充</span></p><small class="route-choice-help">選択中は安全です · 時間制限なし · クリック / Tab・Enterで選択</small></div></section>
+  <section id="pause-screen" class="modal" hidden><div><span class="eyebrow">SIGNAL INTERRUPTED</span><h2>PAUSED<span>.</span></h2><p id="control-info">左ボタン長押しで連射 / Rでリロード / 1・2で武器切替<br>Gで手榴弾 / P・Escで一時停止<br>矢印キーで照準移動 / Space長押しで連射</p><button id="resume" class="primary">戦線に戻る <span>↗</span></button><button id="quit-pause" class="secondary quit-button">モード選択に戻る</button></div></section>
+  <section id="result" class="modal" hidden><div><span id="result-label" class="eyebrow"></span><h2 id="result-title"></h2><p id="result-message"></p><div class="result-stats"><div><span>SCORE</span><b id="result-score"></b></div><div><span>KILLS</span><b id="result-kills"></b></div><div><span>ACCURACY</span><b id="result-accuracy"></b></div></div><p id="result-best"></p><button id="retry" class="primary">もう一度出撃 <span>↗</span></button><button id="quit-result" class="secondary quit-button">モード選択に戻る</button></div></section>
+  <div id="error" hidden>3D画面を起動できませんでした。WebGLに対応したブラウザで開いてください。</div>
+</main><script type="module" src="game.js"></script>
+</body></html>

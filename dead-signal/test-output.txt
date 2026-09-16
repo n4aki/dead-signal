@@ -1,0 +1,349 @@
+
+> dead-signal@1.0.0 test
+> node --test tests/engine.test.js tests/stages.test.js tests/enemies.test.js tests/boss.test.js tests/motion.test.js tests/free-roam.test.js
+
+TAP version 13
+# Subtest: boss uses all five telegraphed moves, dodges both ways and returns to the arena
+ok 1 - boss uses all five telegraphed moves, dodges both ways and returns to the arena
+  ---
+  duration_ms: 4.1504
+  ...
+# Subtest: six damage interrupts jump and lunge before impact, including midair
+ok 2 - six damage interrupts jump and lunge before impact, including midair
+  ---
+  duration_ms: 0.6686
+  ...
+# Subtest: pause and death freeze every boss phase and suppress attack events
+ok 3 - pause and death freeze every boss phase and suppress attack events
+  ---
+  duration_ms: 0.2457
+  ...
+# Subtest: rocks arc toward the launch target and need three pistol hits or one shotgun hit
+ok 4 - rocks arc toward the launch target and need three pistol hits or one shotgun hit
+  ---
+  duration_ms: 0.3763
+  ...
+# Subtest: mutant model is wider than a walker, animates every attack and preserves head targeting
+ok 5 - mutant model is wider than a walker, animates every attack and preserves head targeting
+  ---
+  duration_ms: 56.2275
+  ...
+# Subtest: every requested enemy is scheduled and encounter counts still match wave completion
+ok 6 - every requested enemy is scheduled and encounter counts still match wave completion
+  ---
+  duration_ms: 1.0579
+  ...
+# Subtest: area identities have a dominant enemy group instead of a uniform mix
+ok 7 - area identities have a dominant enemy group instead of a uniform mix
+  ---
+  duration_ms: 0.2092
+  ...
+# Subtest: archer moves out of cover, warns before firing, and respects shot cooldown
+ok 8 - archer moves out of cover, warns before firing, and respects shot cooldown
+  ---
+  duration_ms: 0.2531
+  ...
+# Subtest: bomber has a complete fuse and cannot explode twice
+ok 9 - bomber has a complete fuse and cannot explode twice
+  ---
+  duration_ms: 0.0894
+  ...
+# Subtest: perched archers fire at extended distance without walking off their platform
+ok 10 - perched archers fire at extended distance without walking off their platform
+  ---
+  duration_ms: 0.0817
+  ...
+# Subtest: death cancels a fuse, and pausing freezes both aim and fuse
+ok 11 - death cancels a fuse, and pausing freezes both aim and fuse
+  ---
+  duration_ms: 0.1216
+  ...
+# Subtest: small enemies only attack after arrival and use distinct health and speed
+ok 12 - small enemies only attack after arrival and use distinct health and speed
+  ---
+  duration_ms: 0.1075
+  ...
+# Subtest: projectile sweep catches fast hits without hitting near misses or retreating shots
+ok 13 - projectile sweep catches fast hits without hitting near misses or retreating shots
+  ---
+  duration_ms: 0.2593
+  ...
+# Subtest: all bestiary models have real head geometry and correct anatomy
+ok 14 - all bestiary models have real head geometry and correct anatomy
+  ---
+  duration_ms: 125.1251
+  ...
+# Subtest: enemy-specific points retain headshot and combo scoring
+ok 15 - enemy-specific points retain headshot and combo scoring
+  ---
+  duration_ms: 0.3518
+  ...
+# Subtest: detailed models share baked geometry but keep joints and warning effects independent
+ok 16 - detailed models share baked geometry but keep joints and warning effects independent
+  ---
+  duration_ms: 16.8012
+  ...
+# Subtest: creature voices vary by species and event, with distance attenuation and stereo limits
+ok 17 - creature voices vary by species and event, with distance attenuation and stereo limits
+  ---
+  duration_ms: 0.3397
+  ...
+# Subtest: voice concurrency, cooldown, natural ending and muting release every audio node
+ok 18 - voice concurrency, cooldown, natural ending and muting release every audio node
+  ---
+  duration_ms: 1.5222
+  ...
+# Subtest: rescue announces three staggered attackers and cannot finish before all are defeated
+ok 19 - rescue announces three staggered attackers and cannot finish before all are defeated
+  ---
+  duration_ms: 0.5214
+  ...
+# Subtest: rescue timers and support freeze during pause and support stops after eight seconds
+ok 20 - rescue timers and support freeze during pause and support stops after eight seconds
+  ---
+  duration_ms: 0.311
+  ...
+# Subtest: three attacks fail the rescue once without rewards or further spawns
+ok 21 - three attacks fail the rescue once without rewards or further spawns
+  ---
+  duration_ms: 0.1397
+  ...
+# Subtest: survivor can signal, assist and escape, and threat markers never intercept shots
+ok 22 - survivor can signal, assist and escape, and threat markers never intercept shots
+  ---
+  duration_ms: 1.1237
+  ...
+# Subtest: held machine gun sustains fire, reloads empty magazine and resumes without another press
+ok 23 - held machine gun sustains fire, reloads empty magazine and resumes without another press
+  ---
+  duration_ms: 2.5835
+  ...
+# Subtest: automatic fire stops on lifecycle exits and cannot turn the shotgun automatic
+ok 24 - automatic fire stops on lifecycle exits and cannot turn the shotgun automatic
+  ---
+  duration_ms: 0.158
+  ...
+# Subtest: horde counts and cadence grow while limiting simultaneous active enemies
+ok 25 - horde counts and cadence grow while limiting simultaneous active enemies
+  ---
+  duration_ms: 0.8491
+  ...
+# Subtest: ammo, cooldown and reload prevent unlimited fire
+ok 26 - ammo, cooldown and reload prevent unlimited fire
+  ---
+  duration_ms: 0.2864
+  ...
+# Subtest: pause freezes reload, cooldown and combo
+ok 27 - pause freezes reload, cooldown and combo
+  ---
+  duration_ms: 0.177
+  ...
+# Subtest: weapons retain separate magazines
+ok 28 - weapons retain separate magazines
+  ---
+  duration_ms: 0.1179
+  ...
+# Subtest: combos award points, expire, and reset on damage
+ok 29 - combos award points, expire, and reset on damage
+  ---
+  duration_ms: 0.133
+  ...
+# Subtest: death, reset and wave supplies
+ok 30 - death, reset and wave supplies
+  ---
+  duration_ms: 0.2241
+  ...
+# Subtest: five waves grow and final wave includes a boss
+ok 31 - five waves grow and final wave includes a boss
+  ---
+  duration_ms: 0.1176
+  ...
+# Subtest: clear holds the camera, then travels continuously and supplies only on arrival
+ok 32 - clear holds the camera, then travels continuously and supplies only on arrival
+  ---
+  duration_ms: 0.4819
+  ...
+# Subtest: pausing movement preserves camera position and resumes remaining travel
+ok 33 - pausing movement preserves camera position and resumes remaining travel
+  ---
+  duration_ms: 0.4285
+  ...
+# Subtest: all four routes arrive exactly at their destination; final area cannot travel
+ok 34 - all four routes arrive exactly at their destination; final area cannot travel
+  ---
+  duration_ms: 0.2448
+  ...
+# Subtest: retry clears a partially completed route and starts at the checkpoint
+ok 35 - retry clears a partially completed route and starts at the checkpoint
+  ---
+  duration_ms: 0.1525
+  ...
+# Subtest: the checkpoint choice waits indefinitely and rejects combat input, invalid and duplicate selections
+ok 36 - the checkpoint choice waits indefinitely and rejects combat input, invalid and duplicate selections
+  ---
+  duration_ms: 0.3834
+  ...
+# Subtest: both routes retain five encounters, distinct enemies, and rejoin the hospital before the same boss
+ok 37 - both routes retain five encounters, distinct enemies, and rejoin the hospital before the same boss
+  ---
+  duration_ms: 0.8451
+  ...
+# Subtest: destroyed cover releases player collision and cached pursuit routes
+ok 38 - destroyed cover releases player collision and cached pursuit routes
+  ---
+  duration_ms: 13.1109
+  ...
+# Subtest: pursuit routes go around cover and update when the target moves
+ok 39 - pursuit routes go around cover and update when the target moves
+  ---
+  duration_ms: 11.2511
+  ...
+# Subtest: player movement is view relative, diagonal speed is normalized and sprint is faster
+ok 40 - player movement is view relative, diagonal speed is normalized and sprint is faster
+  ---
+  duration_ms: 0.9312
+  ...
+# Subtest: movement cannot tunnel through cover or arena edges and can slide along walls
+ok 41 - movement cannot tunnel through cover or arena edges and can slide along walls
+  ---
+  duration_ms: 1.44
+  ...
+# Subtest: player respects nearby enemy bodies, reset and looking limits
+ok 42 - player respects nearby enemy bodies, reset and looking limits
+  ---
+  duration_ms: 0.6164
+  ...
+# Subtest: overhead beams do not block ground navigation and small gaps reject large bodies
+ok 43 - overhead beams do not block ground navigation and small gaps reject large bodies
+  ---
+  duration_ms: 0.6124
+  ...
+# Subtest: open corners curve while blocked corners and stair heights retain their safe waypoints
+ok 44 - open corners curve while blocked corners and stair heights retain their safe waypoints
+  ---
+  duration_ms: 1.8523
+  ...
+# Subtest: gait follows distance, acceleration is gradual, facing follows travel, pause freezes all clocks
+ok 45 - gait follows distance, acceleration is gradual, facing follows travel, pause freezes all clocks
+  ---
+  duration_ms: 2.689
+  ...
+# Subtest: every creature has pace variation and every ground path can still finish
+ok 46 - every creature has pace variation and every ground path can still finish
+  ---
+  duration_ms: 6.3159
+  ...
+# Subtest: hit reactions and following traffic slow movement without stopping progress
+ok 47 - hit reactions and following traffic slow movement without stopping progress
+  ---
+  duration_ms: 0.8603
+  ...
+# Subtest: clearance rotates with rooms and accepts upper platforms as support
+ok 48 - clearance rotates with rooms and accepts upper platforms as support
+  ---
+  duration_ms: 0.4059
+  ...
+# Subtest: attack poses wind up before contact, recover afterwards and stay frozen on pause
+ok 49 - attack poses wind up before contact, recover afterwards and stay frozen on pause
+  ---
+  duration_ms: 0.3256
+  ...
+# Subtest: planted enemies stop stepping, while moving quadrupeds use opposite diagonal feet
+ok 50 - planted enemies stop stepping, while moving quadrupeds use opposite diagonal feet
+  ---
+  duration_ms: 97.4224
+  ...
+# Subtest: grounded walking poses keep a supporting foot on the floor
+ok 51 - grounded walking poses keep a supporting foot on the floor
+  ---
+  duration_ms: 14.6714
+  ...
+# Subtest: free roam pursuit crosses the checkpoint while clearing actual scenery and barrels
+ok 52 - free roam pursuit crosses the checkpoint while clearing actual scenery and barrels
+  ---
+  duration_ms: 14.4476
+  ...
+# Subtest: all cinematic rails begin and end at the exact combat poses and conceal their cut
+ok 53 - all cinematic rails begin and end at the exact combat poses and conceal their cut
+  ---
+  duration_ms: 0.9179
+  ...
+# Subtest: enemy routes reach the player without walking through walls or cover
+ok 54 - enemy routes reach the player without walking through walls or cover
+  ---
+  duration_ms: 11.51
+  ...
+# Subtest: dumpster blocks the enemy before it rounds the corner and then exposes it
+ok 55 - dumpster blocks the enemy before it rounds the corner and then exposes it
+  ---
+  duration_ms: 0.4646
+  ...
+# Subtest: combat camera movement stays outside solid objects, including the indoor ceilings
+ok 56 - combat camera movement stays outside solid objects, including the indoor ceilings
+  ---
+  duration_ms: 0.844
+  ...
+# Subtest: changing a stage leaves only its geometry visible
+ok 57 - changing a stage leaves only its geometry visible
+  ---
+  duration_ms: 0.2575
+  ...
+# Subtest: detailed scenery is baked into bounded draw batches with valid GPU attributes
+ok 58 - detailed scenery is baked into bounded draw batches with valid GPU attributes
+  ---
+  duration_ms: 34.2364
+  ...
+# Subtest: flying and low enemies clear actual geometry on their scheduled routes
+ok 59 - flying and low enemies clear actual geometry on their scheduled routes
+  ---
+  duration_ms: 10.924
+  ...
+# Subtest: every entrance has clear routes for every permitted enemy, including low bodies and aerial arrivals
+ok 60 - every entrance has clear routes for every permitted enemy, including low bodies and aerial arrivals
+  ---
+  duration_ms: 15.1064
+  ...
+# Subtest: all eight entrances are used and compatible choices rotate without repeats
+ok 61 - all eight entrances are used and compatible choices rotate without repeats
+  ---
+  duration_ms: 0.6445
+  ...
+# Subtest: high-ground archers have a clear line of fire to both camera positions
+ok 62 - high-ground archers have a clear line of fire to both camera positions
+  ---
+  duration_ms: 0.2092
+  ...
+# Subtest: replacement scenery hides enemies at spawn and exposes them after they round the cover
+ok 63 - replacement scenery hides enemies at spawn and exposes them after they round the cover
+  ---
+  duration_ms: 1.22
+  ...
+# Subtest: checkpoint and avenue routes clear cover and barrels with animated arms, legs and bows
+ok 64 - checkpoint and avenue routes clear cover and barrels with animated arms, legs and bows
+  ---
+  duration_ms: 1853.0233
+  ...
+# Subtest: both branch rails and their rejoining rails reach the chosen camera without crossing cover
+ok 65 - both branch rails and their rejoining rails reach the chosen camera without crossing cover
+  ---
+  duration_ms: 1.1643
+  ...
+# Subtest: hospital rescue, attacking routes and escape stay visible and clear of solid scenery
+ok 66 - hospital rescue, attacking routes and escape stay visible and clear of solid scenery
+  ---
+  duration_ms: 60.2893
+  ...
+# Subtest: new turning paths clear the real stage geometry for every entrance and species
+ok 67 - new turning paths clear the real stage geometry for every entrance and species
+  ---
+  duration_ms: 1000.49
+  ...
+1..67
+# tests 67
+# suites 0
+# pass 67
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3574.961

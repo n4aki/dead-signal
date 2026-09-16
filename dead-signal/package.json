@@ -1,0 +1,11 @@
+{
+  "name": "dead-signal",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "test": "node --test tests/engine.test.js tests/stages.test.js tests/enemies.test.js tests/boss.test.js tests/motion.test.js tests/free-roam.test.js",
+    "build": "node build.js"
+  }
+}
