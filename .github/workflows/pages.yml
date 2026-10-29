@@ -1,0 +1,55 @@
+name: Publish DEAD SIGNAL to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Locate game source
+        id: game
+        shell: bash
+        run: |
+          if [ -f dead-signal/package.json ]; then
+            echo 'directory=dead-signal' >> "$GITHUB_OUTPUT"
+          else
+            echo 'directory=.' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Test game
+        working-directory: ${{ steps.game.outputs.directory }}
+        run: npm test
+      - name: Build static game
+        working-directory: ${{ steps.game.outputs.directory }}
+        run: npm run build
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: ${{ steps.game.outputs.directory }}/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+      - name: Publish game
+        id: deployment
+        uses: actions/deploy-pages@v4

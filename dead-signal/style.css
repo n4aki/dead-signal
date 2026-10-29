@@ -78,3 +78,9 @@ h1{letter-spacing:-3px}
  #free-help{bottom:190px}.hud-bottom{padding-top:5px;padding-bottom:6px}.ammo-block strong{font-size:30px}.health-block{width:130px}.actions{position:static}.actions span{display:none}
  #health-hearts{grid-template-columns:repeat(10,11px);gap:2px;margin:5px 0}.life-heart{width:11px;height:11px}#weapon{font-size:8px}#announcement strong{font-size:30px}
 }
+
+#touch-fire{line-height:1.4;padding:8px}#touch-fire.firing{background:#d8f36aaa;color:#14201c;box-shadow:0 0 22px #d8f36a55}
+@media(pointer:coarse){#touch-fire{width:96px;height:96px;font-size:13px}}
+@media(pointer:coarse) and (orientation:landscape){#touch-fire{width:86px;height:86px}}
+
+#rotate-screen{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:32px max(24px,env(safe-area-inset-left));background:#09150f;text-align:center;touch-action:none}#rotate-screen>div{max-width:360px}.rotate-icon{display:block;font-size:76px;color:var(--acid);margin-bottom:24px}#rotate-screen h2{font-family:Arial,"Yu Gothic",sans-serif;font-size:26px;letter-spacing:1px;line-height:1.4}#rotate-screen p{font-size:14px;line-height:2;color:#c0cdbb}#rotate-screen small{display:block;font-size:11px;line-height:1.8;color:#8fa087;margin-top:24px}

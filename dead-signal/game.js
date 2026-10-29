@@ -476,6 +476,7 @@ function startWave() {
   sound('wave'); updateHud();
 }
 function start() {
+  if(portraitBlocked())return;
   routePanel.close();
   for (const e of enemies) {scene.remove(e.root);disposeEnemyModel(e);} enemies.length = 0;
   effects.clear();trigger.clear();killPulse=0;$('kill-callout').textContent='';$('popups').replaceChildren();
@@ -483,14 +484,14 @@ function start() {
   state.reset(); state.wave = freeMode?1:selectedWave(); bossPractice=!freeMode&&$('start-area').value==='boss'; practice = freeMode||state.wave > 1; state.mode = 'playing'; endShown = false; gun.visible = true; gunBody.scale.z = .6; keys.clear();
   $('area-total').textContent=freeMode?'/ 01':'/ 05';$('free-help').hidden=!freeMode;$('free-pointer-hint').textContent='マウス移動で視点操作 / クリックでマウス固定';
   $('app').classList.toggle('free-mode',freeMode);
-  $('control-info').innerHTML=touchDevice?'左スティック：移動 / 画面スワイプ：視点・照準<br>射撃ボタン長押し：連射 / HUDのボタン：リロード・手榴弾・武器切替':freeMode?'WASD：移動 / Shift：ダッシュ / マウス・矢印：視点<br>左ボタン・Space：連射 / R・右ボタン：リロード<br>G：手榴弾 / 1・2：武器切替 / Esc・P：一時停止':arcadePause;
+  $('control-info').innerHTML=touchDevice?'左スティック：移動 / 射撃ボタンを押してスライド：狙いながら連射<br>自動移動モード：敵をタッチしてそのまま連射 / 指を離すと停止':freeMode?'WASD：移動 / Shift：ダッシュ / マウス・矢印：視点<br>左ボタン・Space：連射 / R・右ボタン：リロード<br>G：手榴弾 / 1・2：武器切替 / Esc・P：一時停止':arcadePause;
   machineParts.visible=true;flare.position.z=-.9;
   $('menu').hidden = true; $('result').hidden = true; $('pause-screen').hidden = true; $('hud').hidden = false; $('boss-bar').hidden = true; $('app').classList.add('playing'); $('status').textContent = 'LIVE / SECTOR 07';
   pointer.set(0, 0); moveCrosshair(); startWave(); updateHud(); $('scene').focus();
   if(freeMode){updateFreeCamera();requestFreeLook();announce('WASD 移動 / マウス視点 / 21体を排除','FREE ROAM',3);}
 }
 function pause() { clearTouch();trigger.clear();voices.stopAll();if (!state.pause()) return; releaseFreeLook();keys.clear(); $('pause-screen').hidden = false; $('app').classList.remove('playing'); $('resume').focus(); }
-function resume() { if (!state.resume()) return; $('pause-screen').hidden = true; $('app').classList.toggle('playing',!state.choosing); if(state.choosing)routePanel.focus();else $('scene').focus(); clock.getDelta();if(freeMode)requestFreeLook(); }
+function resume() { if(portraitBlocked())return; if (!state.resume()) return; $('pause-screen').hidden = true; $('app').classList.toggle('playing',!state.choosing); if(state.choosing)routePanel.focus();else $('scene').focus(); clock.getDelta();if(freeMode)requestFreeLook(); }
 function finish(won) {
   clearRescue();
   trigger.clear();
@@ -510,18 +511,18 @@ function moveCrosshair() { $('crosshair').style.left = `${(pointer.x * .5 + .5) 
 // Touch pointers are tracked independently so movement, aiming and firing can overlap.
 let touchAim=null,touchStick=null,touchShot=null;
 const touchKeys=new Set();
-function clearTouch(){touchAim=null;touchStick=null;touchShot=null;touchKeys.clear();trigger.release('touch');$('move-stick').style.transform='';}
+function clearTouch(){touchAim=null;touchStick=null;touchShot=null;touchKeys.clear();trigger.release('touch');trigger.release('touch-aim');$('touch-fire').classList.remove('firing');$('move-stick').style.transform='';}
 function setTouchAim(e){pointer.set(e.clientX/innerWidth*2-1,1-e.clientY/innerHeight*2);moveCrosshair();}
 $('scene').addEventListener('pointerdown',e=>{
   if(e.pointerType!=='touch')return;e.stopImmediatePropagation();e.preventDefault();
   if(state.mode!=='playing'||touchAim)return;
   touchAim={id:e.pointerId,x:e.clientX,y:e.clientY};$('scene').setPointerCapture(e.pointerId);
-  if(!freeMode)setTouchAim(e);
+  if(!freeMode){setTouchAim(e);trigger.hold('touch-aim');fire();}
 });
 $('scene').addEventListener('pointermove',e=>{
   if(e.pointerType!=='touch')return;e.stopImmediatePropagation();
   if(state.mode!=='playing'||touchAim?.id!==e.pointerId)return;
-  if(freeMode)freePlayer.look(e.clientX-touchAim.x,e.clientY-touchAim.y);else setTouchAim(e);
+  if(touchShot===null){if(freeMode)freePlayer.look(e.clientX-touchAim.x,e.clientY-touchAim.y);else setTouchAim(e);}
   touchAim.x=e.clientX;touchAim.y=e.clientY;
 });
 function stickMove(e){
@@ -533,11 +534,18 @@ function stickMove(e){
 }
 $('move-pad').addEventListener('pointerdown',e=>{if(state.mode!=='playing'||!freeMode||touchStick!==null)return;e.preventDefault();touchStick=e.pointerId;$('move-pad').setPointerCapture(e.pointerId);stickMove(e);});
 $('move-pad').addEventListener('pointermove',e=>{if(e.pointerId===touchStick)stickMove(e);});
-$('touch-fire').addEventListener('pointerdown',e=>{if(state.mode!=='playing'||touchShot!==null)return;e.preventDefault();touchShot=e.pointerId;$('touch-fire').setPointerCapture(e.pointerId);trigger.hold('touch');fire();});
+$('touch-fire').addEventListener('pointerdown',e=>{if(state.mode!=='playing'||touchShot!==null)return;e.preventDefault();touchShot={id:e.pointerId,x:e.clientX,y:e.clientY};$('touch-fire').setPointerCapture(e.pointerId);$('touch-fire').classList.add('firing');trigger.hold('touch');fire();});
+$('touch-fire').addEventListener('pointermove',e=>{
+  if(state.mode!=='playing'||touchShot?.id!==e.pointerId)return;
+  const dx=e.clientX-touchShot.x,dy=e.clientY-touchShot.y;
+  if(freeMode)freePlayer.look(dx,dy);
+  else {pointer.x+=dx/innerWidth*2;pointer.y-=dy/innerHeight*2;pointer.clampScalar(-.98,.98);moveCrosshair();}
+  touchShot.x=e.clientX;touchShot.y=e.clientY;
+});
 function endTouch(e){
-  if(touchAim?.id===e.pointerId)touchAim=null;
+  if(touchAim?.id===e.pointerId){touchAim=null;trigger.release('touch-aim');}
   if(touchStick===e.pointerId){touchStick=null;touchKeys.clear();$('move-stick').style.transform='';}
-  if(touchShot===e.pointerId){touchShot=null;trigger.release('touch');}
+  if(touchShot?.id===e.pointerId){touchShot=null;trigger.release('touch');$('touch-fire').classList.remove('firing');}
 }
 for(const event of ['pointerup','pointercancel','lostpointercapture'])window.addEventListener(event,endTouch);
 $('scene').addEventListener('pointermove', e => {
@@ -593,7 +601,14 @@ window.addEventListener('keyup', e => {
   freeTaps.delete(k);keys.delete(k);if(e.key===' ')trigger.release('keyboard');
 });
 window.addEventListener('blur', pause); document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); });
-function resize() { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); }
+function portraitBlocked(){return touchDevice&&innerHeight>innerWidth;}
+function syncOrientation(){
+  const blocked=portraitBlocked();
+  if(blocked)pause();
+  $('rotate-screen').hidden=!blocked;
+  $('app').inert=blocked;
+}
+function resize() { syncOrientation(); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); }
 window.addEventListener('resize', resize); resize();
 let hudTimer = 0;
 function frame() {
