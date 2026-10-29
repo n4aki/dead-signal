@@ -1,4 +1,4 @@
-name: Publish DEAD SIGNAL to GitHub Pages
+name: Validate DEAD SIGNAL for GitHub Pages
 
 on:
   push:
@@ -35,21 +35,3 @@ jobs:
       - name: Build static game
         working-directory: ${{ steps.game.outputs.directory }}
         run: npm run build
-      - uses: actions/upload-pages-artifact@v4
-        with:
-          path: ${{ steps.game.outputs.directory }}/dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/configure-pages@v5
-      - name: Publish game
-        id: deployment
-        uses: actions/deploy-pages@v4

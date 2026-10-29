@@ -1,18 +1,11 @@
 # GitHub Pages
 
-GitHub リポジトリ: https://github.com/n4aki/dead-signal
+公開URL: https://n4aki.github.io/dead-signal/
 
-公開予定 URL: https://n4aki.github.io/dead-signal/
+既存のmainブランチ・ルート公開を利用しています。リポジトリ直下のindex.htmlからdead-signal/内のゲームへ移動します。.nojekyllで静的ファイルをそのまま配信します。
 
-リポジトリの **Settings → Pages → Build and deployment → Source** を
-**GitHub Actions** に設定してください。
-その後 **Actions → Publish DEAD SIGNAL to GitHub Pages → Run workflow** を実行します。
-以降は `main` への更新でテスト・ビルド・公開が自動実行されます。
+ゲームの更新はdead-signal/内のソースに反映してください。dist/は他の静的ホスティング向けのビルド出力です。GitHub Pagesはソース内のindex.htmlと相対パスのアセットを配信します。
 
-ゲームがリポジトリ直下でも `dead-signal/` 内でも動作する設定です。
-配信するのはビルド済みの `dist/` の中身だけです。
-相対パスでアセットを読み込むため、`/dead-signal/` 配下でも動作します。
-スマホは横向き専用で、照準と連射を同時に操作できます。
-ハイスコアはブラウザのサイトごとに保存され、Sites版からは引き継がれません。
+.github/workflows/pages.ymlはテストとビルドの検証専用です。公開は既存のpages build and deploymentが担当し、二重公開を避けます。Settings → PagesのSourceはDeploy from a branch、main、/(root)を使用します。
 
-公式手順: https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages
+スマホは横向き専用、照準と連射の同時操作に対応。ハイスコアはサイトごとにブラウザへ保存されます。
